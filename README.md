@@ -4,6 +4,6 @@
 <p>Esse repositório é destinado ao código fonte do projeto em python de um criador de patchs para o satélite CBERS4-A. </p>
 
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Python_logo_01.svg" width="150" 
+<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Python_logo_01.svg" width="150" 
      height="150"> <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Satellite_icon1.png" width="150" 
      height="150"> </p>
