@@ -1,5 +1,5 @@
 <h1>CBERS4-A Patch Generator Project</h1>
-<p style="text-align": justify>A criação de patches de imagens é um procedimento de subdivisão de uma imagem ou stack de imagens em “pedaços” menores, que possibilitam a otimização de diversos processos, como por exemplo: o de treinamento de classificadores supervisionados, substituição de partes da imagem com ruídos ou problemas, entre outros. Devido ao menor espaço ocupado na memória do computador, essas pequenas partes podem ter um desempenho computacional e de tempo superior à classificação da imagem como um todo. 
+<p style="text-align:justify": justify>A criação de patches de imagens é um procedimento de subdivisão de uma imagem ou stack de imagens em “pedaços” menores, que possibilitam a otimização de diversos processos, como por exemplo: o de treinamento de classificadores supervisionados, substituição de partes da imagem com ruídos ou problemas, entre outros. Devido ao menor espaço ocupado na memória do computador, essas pequenas partes podem ter um desempenho computacional e de tempo superior à classificação da imagem como um todo. 
 </p>
 <p>Esse repositório é destinado ao código fonte do projeto em python de um criador de patchs para o satélite CBERS4-A. </p>
 
