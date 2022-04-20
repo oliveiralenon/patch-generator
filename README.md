@@ -8,4 +8,4 @@
      height="150"> <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Satellite_icon1.png" width="150" 
      height="150"> </p>
      
-   <p>&copy; 2022 Érick Rodrigues, Lenon Oliveira, Ricardo Neves, Vinícius Queiroz/p>
+   <p fontsize="10">&copy; 2022 Érick Rodrigues, Lenon Oliveira, Ricardo Neves, Vinícius Queiroz</p>
