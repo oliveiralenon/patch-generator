@@ -4,8 +4,8 @@
 <br>
 
 <h2>Fluxograma de funcionamento do pacote</h2>
-![fluxograma](https://user-images.githubusercontent.com/61318646/171402882-79f3e8d1-7e9a-48e7-a3b9-0bc0c8ec4060.jpg)
 
+<p align="center"><img src="![fluxograma](https://user-images.githubusercontent.com/61318646/171402882-79f3e8d1-7e9a-48e7-a3b9-0bc0c8ec4060.jpg)">
 
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Python_logo_01.svg" width="150" 
      height="150"> <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Satellite_icon1.png" width="150" 
