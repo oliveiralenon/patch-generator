@@ -3,7 +3,7 @@
 </p>
 <br>
 
-<h2>Fluxograma de funcionamento do pacote</h2>
+<h2>Fluxograma de funcionamento</h2>
 
 <p align="center"><img src="https://user-images.githubusercontent.com/61318646/171402882-79f3e8d1-7e9a-48e7-a3b9-0bc0c8ec4060.jpg">
 
