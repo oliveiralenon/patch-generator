@@ -12,7 +12,7 @@ def systematic(tif_path, pixelX=None, pixelY=None, tamX=None,
     """
     Função para criação de patchs conforme parâmetros escolhidos pelo usuário.
 
-    patch_generator(tif_path, pixelX=None, pixelY=None, tamX=None,
+    patchgen.systematic(tif_path, pixelX=None, pixelY=None, tamX=None,
                     tamY=None, sobras = False)
 
 
@@ -54,8 +54,12 @@ def systematic(tif_path, pixelX=None, pixelY=None, tamX=None,
 
     # Coletando os dados do raster
     gt = raster.GetGeoTransform()
+    # Funcao GetDescription puxa o nome do arquivo raster
     name = raster.GetDescription()
+    # Criando uma variável name que irá receber o noem do arquivo sem a extensão do arquivo
+    # ex: 'T33PVP_20221209T092401_B02_10m.jp2' será 'T33PVP_20221209T092401_B02_10m'
     name = name.split('.')[-2]
+    print(name)
 
     # Separando os valores da lista gt
     # Coleta da coordenada x do canto superior esquerdo
@@ -167,27 +171,78 @@ def patch_intersection(x1,y1,x2,y2,pixelX,pixelY):
 def rand(tif_path, pixelX=None, pixelY=None, tamX=None,
                     tamY=None, t=1000, npatch=None):
     """
-    DOCSTRING
+    Função para criar patches randômicos, porém, sem sobreposição.
+
+    patchgen.rand(tif_path, pixelX=None, pixelY=None, tamX=None, tamY=None, t=1000, npatch=None)
+
+
+    tif_path: Deve ser inserida uma string com o
+    diretório onde a imagem raster está inserida.
+    ex: '/content/crop_rapideye.tif'
+
+
+    pixelX: Deve ser inserido um valor inteiro com
+    a dimensão desejada para o eixo X do patch.
+    ex: 300
+
+    pixelY: Deve ser inserido um valor inteiro com
+    a dimensão desejada para o eixo Y do patch.
+    ex: 300
+
+    tamX: Deve ser inserido um valor inteiro, em metros, da
+    dimensão desejada para o eixo X do patch
+    ex: 1500
+
+    tamY: Deve ser inserido um valor inteiro, em metros, da
+    dimensão desejada para o eixo Y do patch
+    ex: 1500
+
+    t: Número de iterações que serão realizadas pelo algoritmo,
+    caso o usuário insira poucas iterações, é possível que a função
+    não retorne o número de patches requerido, tendo em vista que podem
+    ocorrer pontos de intersecção que não serão recortados
+
+    npatch: Número de patches que o usuário deseja criar
+
+
+    Exemplo de aplicação:
+    Por exemplo, inserindo os seguintes parâmetros...
+
+    patch_generator('/content/crop_rapideye.tif', pixelX=300, pixelY=300, npatch=30)
+
+    Serão criados 30 patches de 300x300 pixels do raster
+    crop_rapideye.tif, caso as iterações default (1000)
+    consigam pegar pontos sem interseccao
     """
     raster = gdal.Open(tif_path)
     #Coletando os dados do raster
     gt = raster.GetGeoTransform()
     print(gt)
-
+    # Funcao GetDescription puxa o nome do arquivo raster
     name = raster.GetDescription()
+    # removendo a extensão do nome do arquivo raster, ex: .tif e salvando em uma variável
     name = name.split('.')[-2]
-    # Separando os valores da lista gt
+
+    #  Coleta da coordenada x do canto superior esquerdo
     img_xmin = gt[0]
+    # Coleta da coordenada y do canto superior esquerdo
     img_ymax = gt[3]
+    # Coleta da resolução da imagem
     res = gt[1]
+
 
     if tamX != None and tamY != None:
         pixelX = tamX // res
         pixelY = tamY // res
 
+    # Verificandoo tamanho da imagem nos eixos x e y.
+    # n_pixelsx é o numero de pixels na dimensão x
+    # n_pixelsy é o numero de pixels na dimensão y
     n_pixelsx = raster.RasterXSize
     n_pixelsy = raster.RasterYSize
 
+    # img_xlen é tamanho da imagem em metros na dimensão x 
+    # img_ylen é tamanho da imagem em metros na dimensão y 
     img_xlen = res * n_pixelsx
     img_ylen = res * n_pixelsy
 
@@ -228,7 +283,7 @@ def rand(tif_path, pixelX=None, pixelY=None, tamX=None,
       
       if tentativas >= t or indice - 1 == npatch:
           print(f'Número de tentativas atingido {t} sem resolução.')
-          print(f'Número de patches criados: {indice}')
+          print(f'Número de patches criados: {indice-1}')
           print(f'Iterações = {iteracoes}')
           break
           
@@ -279,24 +334,30 @@ def rand_overlap(tif_path, pixelX=None, pixelY=None, tamX=None,
     #Coletando os dados do raster
     gt = raster.GetGeoTransform()
     print(gt)
-
+    
+    # Armazenando o nome do arquivo raster na variavel name
     name = raster.GetDescription()
+    # Armazenando apenas o nome do arquivo sem a extensão
     name = name.split('.')[-2]
+
     # Separando os valores da lista gt
-    #Coordenada x do pixel do canto superior esquerdo
+    # Coordenada x do pixel do canto superior esquerdo
     img_xmin = gt[0]
-    #Coordenada y do pixel do canto superior esquerdo
+    # Coordenada y do pixel do canto superior esquerdo
     img_ymax = gt[3]
-    #Resolução do pixel ao longo do eixo x
+    # Resolução do pixel ao longo do eixo x
     res = gt[1]
 
+    # Verificando se o usuário inseriu o tamano em metros
     if tamX != None and tamY != None:
         pixelX = tamX // res
         pixelY = tamY // res
 
+    # Verificando as dimensões da matriz em X e Y
     n_pixelsx = raster.RasterXSize
     n_pixelsy = raster.RasterYSize
 
+    # Verificando as dimensões totais do raster em metro
     img_xlen = res * n_pixelsx
     img_ylen = res * n_pixelsy
 
@@ -306,12 +367,13 @@ def rand_overlap(tif_path, pixelX=None, pixelY=None, tamX=None,
 
     # Parâmetros iniciais para cálculo das posições aleatórias
     iteracoes=0
+    # Criando um contador de iterações
     indice = 1
     vetor = []  
 
     while True:
         # Inicialização dos parâmetros
-        any_intersection = False 
+        #any_intersection = False 
         iteracoes +=1
 
         x = random.randrange(0,img_limx)
@@ -326,6 +388,7 @@ def rand_overlap(tif_path, pixelX=None, pixelY=None, tamX=None,
         gdal.Warp(name + '_' + 'rp' + str(indice) +'.tif', raster, outputBounds = (xmin, ymin, xmax, ymax), dstNodata = -9999)
         vetor.append((x,y))
         indice +=1
-      
+
+        # Critério de parada do algoritmo
         if indice > npatch:
             break
